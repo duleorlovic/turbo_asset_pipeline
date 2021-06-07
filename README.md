@@ -1,24 +1,31 @@
-# README
+# Turbo rails asset pipeline
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+```
+rails new turbo_asset_pipeline
+cd turbo_asset_pipeline/
+git add .
+git commit -am'rails new turbo_asset_pipeline'
 
-Things you may want to cover:
+echo 'gem "turbo-rails"' >> Gemfile
+bundle
+rails turbo:install
+git add .
+git commit -m'rails turbo:install'
 
-* Ruby version
+rails g scaffold room name
+rails db:migrate
+sed -i config/routes.rb -e "/^end$/i root to: 'rooms#index'"
+git add .
+git commit -am'rails g scaffold room name'
 
-* System dependencies
+sed -i '2s/^/<%= turbo_frame_tag "room" do %>/' app/views/rooms/show.html.erb 
+echo '<% end %>' >> app/views/rooms/show.html.erb 
+echo '<br><input>' >> app/views/rooms/show.html.erb 
+sed -i '2s/^/<%= turbo_frame_tag "room" do %>/' app/views/rooms/edit.html.erb 
+sed -i '4s/^/<% end %>/' app/views/rooms/edit.html.erb 
+git commit -am'Adding turbo_frame_tag'
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+rails turbo:install:asset_pipeline
+sed -i '7s/^/\/\/  /' app/javascript/packs/application.js 
+git commit -am'Using asset_pipeline'
+```
