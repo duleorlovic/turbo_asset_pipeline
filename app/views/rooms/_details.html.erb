@@ -1,0 +1,9 @@
+<%= turbo_frame_tag "room" do %>
+  <p>
+    <strong>Name:</strong>
+    <%= room.name %>
+  </p>
+
+  <%= link_to 'Edit', edit_room_path(room) %> |
+  <%= link_to 'Back', rooms_path, target: '_top' %>
+<% end %>
